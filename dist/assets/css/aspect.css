@@ -1,0 +1,56 @@
+header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+header h1 {
+    color: black;
+    font-family: "Do Hyeon", sans-serif;
+    margin: 30px 0px;
+}
+
+header nav ol {
+    padding-left: 0px;
+    border-bottom: solid black 2px;
+}
+
+header nav ol li {
+    font-family: "Open Sans", sans-serif;
+    display: inline-block;
+    padding: 10px 40px;
+    margin: 0px 20px;
+    transition: 0.2s;
+    border: solid white 2px;
+    border-bottom: none;
+}
+
+header nav ol li.visitable:hover {
+    cursor: pointer;
+    border-color: black;
+}
+
+header nav ol li.active {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+header nav ol li:not(.active) {
+    opacity: 0.3;
+}
+
+section article h3 {
+    padding-left: 100px;
+    margin: 50px 0px;
+}
+
+section article .footer-actions {
+    text-align: right;
+    margin: 100px 40px 20px 0px;
+}
+
+#tip--go-back {
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+}

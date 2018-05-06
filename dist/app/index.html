@@ -1,0 +1,119 @@
+<html>
+<head>
+  <title>AutoCorrect</title>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Oswald|Do+Hyeon|Open+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="../assets/js/vue.min.js"></script>
+
+  <link rel="stylesheet" href="/assets/css/aspect.css">
+
+</head>
+<body>
+
+  <div id="main">
+    <header>
+      <h1>2018 ~ AutoCorrect project</h1>
+      <nav>
+        <ol>
+          <li v-on:click="goTo(1)" v-bind:class="{ active: step === 1, visitable: isVisitable(1) }">Step 1 - upload tests</li>
+          <li v-on:click="goTo(2)" v-bind:class="{ active: step === 2, visitable: isVisitable(2) }">Step 2 - test rules</li>
+          <li v-on:click="goTo(3)" v-bind:class="{ active: step === 3, visitable: isVisitable(3) }">Step 3 - handling exceptions</li>
+          <li v-bind:class="{ active: step === 4, visitable: isVisitable(4) }">Step 4 - apply notation</li>
+        </ol>
+      </nav>
+    </header>
+
+    <section class="container">
+
+      <article v-if="step === 1">
+        <h3>Let's upload some tests !</h3>
+        <p>Once you've uploaded your whole test sets here, click on the <b>UPLOAD</b> button to transmit them on to a distant server.</p>
+        <p>That server will be responsible for parsing and generating a formal description of those tests, which you will be able
+          to interact with at the next step. Give it a try !</p>
+
+        <div class="footer-actions">
+          <button type="button" class="btn btn-outline-danger" v-on:click="uploadTests()">Upload</button>
+        </div>
+      </article>
+
+      <article v-else-if="step === 2">
+        <h3>Then play with them</h3>
+        <p>Here appears the formal description the server parsed from your test sets. By default, each test belong to his own group test.</p>
+        <p>Hover one of your test will make appear <b>action buttons</b> which allows you to :
+          <ul>
+            <li>set (<i class="fas fa-trophy"></i>) an amount of points rewarding the failure or the success,</li>
+            <li>add (<i class="fas fa-plus"></i>) or remove (<i class="fas fa-minus"></i>) test from a <i>group test</i>,</li>
+            <li>rename (<i class="fas fa-pencil-alt"></i>) <i>group test</i> owning the test</li>
+          </ul>
+        </p>
+
+        <div class="footer-actions">
+          <button type="button" class="btn btn-outline-danger" v-on:click="checkTestRules()">Next</button>
+        </div>
+      </article>
+
+      <article v-else-if="step === 3">
+        <h3>Handling exceptions</h3>
+        <p>At runtime some exceptions may be raised and you might want to handle them in a specific way given the
+          importance you grant to the exception.</p>
+        <p>You can add as many couple exception/value as needed, where value is a number and exception a string matching the exception name</p>
+
+        <div class="footer-actions">
+          <button type="button" class="btn btn-outline-danger" v-on:click="checkExceptionRules()">Done</button>
+        </div>
+      </article>
+
+      <article v-else-if="step === 4">
+        <h3>Fetching results...</h3>
+        <p>Notation template has been sent to server which will apply onto student works</p>
+        <p>This step could take some time, please be patient</p>
+
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Firstnames</th>
+            <th>Group</th>
+            <th>Grade (/20)</th>
+          </tr>
+          <tr>
+            <td>Alfreds</td>
+            <td>Maria</td>
+            <td>A1</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>John</td>
+            <td>Wick</td>
+            <td>A3</td>
+            <td>17.5</td>
+          </tr>
+          <tr>
+            <td>Marta</td>
+            <td>Bill</td>
+            <td>A1</td>
+            <td>14</td>
+          </tr>
+        </table>
+
+      </article>
+
+    </section>
+
+    <div id="tip--go-back" class="alert alert-dismissible alert-primary">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Tip :</strong> You can go back to a certain step if needed, just click on the matching tab
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="../assets/js/bundle.main.js"></script>
+
+
+</body>
+</html>
