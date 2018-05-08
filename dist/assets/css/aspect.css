@@ -44,9 +44,44 @@ section article h3 {
     margin: 50px 0px;
 }
 
+section article #uploadForm {
+    position: relative;
+    text-align: center;
+    margin: 50px 0px;
+}
+
+section article #uploadForm input {
+    text-align: center;
+}
+
+section article #uploadForm #uploadForm--loader {
+    padding: 20px;
+}
+
 section article .footer-actions {
     text-align: right;
-    margin: 100px 40px 20px 0px;
+    margin: 50px 40px 20px 0px;
+}
+
+section article .container-tests .test-infos {
+    margin-top: 30px;
+}
+
+section article .container-tests .test-infos .test-name {
+    padding: 10px 0px 10px 30px;
+    margin: 0px;
+    border: solid #272822 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+section article .container-tests .test-infos .test-code {
+    background-color: #272822;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 #tip--go-back {

@@ -37,21 +37,62 @@
         <p>That server will be responsible for parsing and generating a formal description of those tests, which you will be able
           to interact with at the next step. Give it a try !</p>
 
+
+          <form id="uploadForm">
+            <div v-show="!uploadProcessing" class="form-group">
+              <label for="uploaded-testfile">Insert here your tests in order to upload them.</label>
+              <input type="file" name="testfile" @change="selectFileForUpload($event)" class="form-control-file" id="uploaded-testfile">
+            </div>
+            <div v-show="uploadProcessing" id="uploadForm--loader">
+              Uploading to server ....
+            </div>
+          </form>
+
         <div class="footer-actions">
-          <button type="button" class="btn btn-outline-danger" v-on:click="uploadTests()">Upload</button>
+          <button type="button" v-bind:disabled="!fileReadyForUpload || uploadProcessing" class="btn btn-info" v-on:click="uploadTests()">Upload</button>
         </div>
       </article>
 
       <article v-else-if="step === 2">
         <h3>Then play with them</h3>
-        <p>Here appears the formal description the server parsed from your test sets. By default, each test belong to his own group test.</p>
-        <p>Hover one of your test will make appear <b>action buttons</b> which allows you to :
+        <p>It looks like you uploaded {{ testDescriptions.length }} file(s). The details of each file is listed below.</p>
           <ul>
             <li>set (<i class="fas fa-trophy"></i>) an amount of points rewarding the failure or the success,</li>
             <li>add (<i class="fas fa-plus"></i>) or remove (<i class="fas fa-minus"></i>) test from a <i>group test</i>,</li>
             <li>rename (<i class="fas fa-pencil-alt"></i>) <i>group test</i> owning the test</li>
           </ul>
         </p>
+
+        <div class="container container-tests">
+          <div class="row">
+            <!-- LEFT PANEL -->
+            <div class="col-4">
+              <ul class="list-group">
+                <li v-for="description in testDescriptions" class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ description.source }}
+                  <span class="badge badge-primary badge-pill">{{ description.tests.length }} tests</span>
+                </li>
+              </ul>
+            </div>
+            <!-- END OF LEFT PANEL -->
+            <!-- RIGHT PANEL -->
+            <div class="col-8">
+              <!-- PER FILE -->
+              <div v-for="description in testDescriptions">
+                <h2>&gt; {{ description.source}}</h2>
+                <!-- PER TEST IN FILE -->
+                <div class="test-infos" v-for="test in description.tests">
+                  <h4 class="test-name">{{ test.testName }}</h4>
+                  <pre class="test-code" v-html="codeToHtml(test.testCode)"></pre>
+                </div>
+                <!-- END PER TEST IN FILE -->
+              </div>
+              <!-- END PER FILE -->
+            </div>
+            <!-- END OF RIGHT PANEL -->
+          </div>
+        </div>
+
 
         <div class="footer-actions">
           <button type="button" class="btn btn-outline-danger" v-on:click="checkTestRules()">Next</button>

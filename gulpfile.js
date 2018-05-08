@@ -126,7 +126,8 @@ gulp.task('webserver', 'Launch webserver including livereload', ['default'], fun
   gulp.watch(['./src/assets/css/*.scss'], ['css']);
 	connect.server({
 		root: 'dist',
-		livereload: true
+		livereload: true,
+    port: 7777
 	});
 });
 

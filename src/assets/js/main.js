@@ -1,45 +1,36 @@
-Vue.component('file', {
-  props: {
-    name: String,
-    origin:{
-      validator: function(value){
-        return (value === 'Dropbox') || (value === 'Google');
-      }
-    },
-    id:{
-      type: String,
-      required: false
-    }
-  },
-  methods :{
-    getIcon:function(){
-      switch(this.origin){
-        case 'Dropbox':
-          return 'fab fa-dropbox';
-          break;
-        case 'Google':
-          return 'fab fa-google-drive';
-          break;
-        default:
-          return 'fas fa-question';
-          break;
-      }
-    }
-  }
-  ,
-  template: 'this is a file component'
-});
-
 // View
 var model = new Vue({
   el: '#main',
   data: {
     msg: "Vue is working fine",
-    step: 1
+    step: 1,
+
+    fileReadyForUpload: false,
+    uploadProcessing: false,
+    fileToUpload: null,
+
+    testDescriptions: null
   },
   methods: {
     uploadTests: function() {
-      this.step = 2;
+
+      this.uploadProcessing = true;
+
+      let formData = new FormData(document.getElementById('uploadForm'));
+      let uploadRequest = new XMLHttpRequest();
+      uploadRequest.open('POST', 'http://localhost:3000/uploadTests', false); // synchronous for ease of use
+      uploadRequest.send(formData);
+
+      this.testDescriptions = JSON.parse(uploadRequest.responseText);
+      console.log(this.testDescriptions);
+
+      setTimeout(() => {
+        this.step = 2;
+
+        this.fileReadyForUpload = false;
+        this.uploadProcessing = false;
+      }, 1000);
+
     },
     checkTestRules: function() {
       this.step = 3;
@@ -54,9 +45,18 @@ var model = new Vue({
     },
     isVisitable: function(step) {
       return step < this.step;
+    },
+
+    codeToHtml: function(text) {
+      let html = text.replace(/\n/g, '<br/>');
+      html = html.replace(/\ /g, '&ensp;');
+      return html;
+    },
+
+    selectFileForUpload: function(event) {
+      console.log(event);
+      this.fileReadyForUpload = true;
+      this.fileToUpload = event.target.files[0];
     }
   }
 });
-
-
-setTimeout( () => { $('tip--go-back').alert('close') }, 5000);
